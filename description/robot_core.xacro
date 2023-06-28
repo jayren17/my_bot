@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1" />
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1" />
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1" />
+    </material>
+
+    <!-- BASE LINK -->
+    <link name="base_link">
+
+    </link>
+
+    <!-- CHASSIS LINK--> 
+    <joint name="chassis_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis"/>
+        <origin xyz="-0.1 0 0"/> <!-- origin of chassis will be just behind base_link -->
+    </joint>
+
+    <link name="chassis">
+        <visual>
+            <origin xyz="0.18 0 0.11"/>
+            <geometry>
+                <box size="0.36 0.49 0.22"/>
+            </geometry>
+            <material name="white"/>
+
+        </visual>
+        <collision>
+            <origin xyz="0.18 0 0.11"/>
+            <geometry>
+                <box size="0.36 0.49 0.22"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.5" x="0.36" y="0.49" z="0.22"> <!-- 0.5kg for simulation - may need to change to reflect real mass -->
+            <origin xyz="0.18 0 0.11"/>
+        </xacro:inertial_box>
+    </link>
+
+    <!-- LEFT WHEEL LINK -->
+
+    <joint name="left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel"/>
+        <origin xyz="0 0.286 0" rpy="-${pi/2} 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="left_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="0.0625" length="0.02"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.0625" length="0.02"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.1" length="0.02" radius="0.0625">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <!-- RIGHT WHEEL LINK -->
+
+    <joint name="rightt_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="0 -0.286 0" rpy="${pi/2} 0 0"/>
+        <axis xyz="0 0 -1"/>
+    </joint>
+
+    <link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder radius="0.0625" length="0.02"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.0625" length="0.02"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.1" length="0.02" radius="0.0625">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <!-- CASTER WHEEL LINK -->
+    <!-- note: MARIA currently has two caster wheels at the front left and rear right. 
+    However, for the sake of simulation a single spherical caster wheel will be used. -->
+
+    <joint name="caster_wheel_joint" type="fixed">
+
+        <parent link="chassis"/>
+        <child link="caster_wheel"/>
+        <origin xyz="0.24 0 0"/> <!-- change -->
+    </joint>
+
+    <link name="caster_wheel">
+        <visual>
+            <geometry>
+                <sphere radius="0.05"/> <!-- change -->
+                <material name="black"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.05"/> <!-- change -->
+            </geometry>
+        </collision>
+        <xacro:inertial_sphere mass="0.1" radius="0.05">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
+    </link>
+
+
+</robot>
