@@ -51,6 +51,10 @@
         </xacro:inertial_box>
     </link>
 
+    <gazebo reference="chassis">
+        <material>Gazebo/White</material>
+    </gazebo>
+
     <!-- LEFT WHEEL LINK -->
 
     <joint name="left_wheel_joint" type="continuous">
@@ -76,6 +80,10 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
+
+    <gazebo reference="left_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
 
     <!-- RIGHT WHEEL LINK -->
 
@@ -103,6 +111,10 @@
         </xacro:inertial_cylinder>
     </link>
 
+    <gazebo reference="right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
     <!-- CASTER WHEEL LINK -->
     <!-- note: MARIA currently has two caster wheels at the front left and rear right. 
     However, for the sake of simulation a single spherical caster wheel will be used. -->
@@ -117,19 +129,22 @@
     <link name="caster_wheel">
         <visual>
             <geometry>
-                <sphere radius="0.05"/> <!-- change -->
+                <sphere radius="0.0625"/> <!-- change -->
                 <material name="black"/>
             </geometry>
         </visual>
         <collision>
             <geometry>
-                <sphere radius="0.05"/> <!-- change -->
+                <sphere radius="0.0625"/> <!-- change -->
             </geometry>
         </collision>
-        <xacro:inertial_sphere mass="0.1" radius="0.05">
+        <xacro:inertial_sphere mass="0.1" radius="0.0625">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_sphere>
     </link>
 
+    <gazebo reference="caster_wheel">
+        <material>Gazebo/Black</material>
+    </gazebo>
 
 </robot>
